@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <script src="https://use.fontawesome.com/10d1bc1575.js"></script>
+    <script src="/script/helpers.js"></script>
+    <title>
+        <%= titel %>
+    </title>
+</head>
+
+<body>
+    <header class="container">
+        <nav class="template-nav">
+            <ul>
+                <li>
+                    <a href="/">Home</a>
+                </li>
+                <li>
+                    <a href="/login">Log in</a>
+                </li>
+                <li>
+                    <a href="login/signup">Sign up</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+       <%- content %>
+    </main> 
+
+    <footer class="container">
+        
+    </footer>
+
+    <script src="/assets/script/jquery-3.3.1.min.js"></script>
+    <script src="/assets/script/bootstrap.min.js"></script>
+</body>
+
+</html>
