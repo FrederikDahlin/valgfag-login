@@ -1,0 +1,33 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+
+
+.template-nav {
+    background-color: rgb(237, 237, 237);
+    border-radius: 10px;
+    border: 1px solid rgb(228, 228, 228, 2);
+    width: 100%;
+    margin-top: 50px;
+}
+.template-nav ul {
+    margin: 0;
+}
+.template-nav ul li {
+    display: inline-block;
+    transition: .2s;
+}
+.template-nav ul li:hover {
+    background-color: rgb(228, 228, 228);
+}
+.template-nav ul li:first-child:hover {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+.template-nav ul li a {
+    display: block;
+    padding: 12px 30px;
+    text-decoration: none;
+}
