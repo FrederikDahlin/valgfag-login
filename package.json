@@ -1,0 +1,32 @@
+{
+  "name": "valgfag-login",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FrederikDahlin/valgfag-login.git"
+  },
+  "author": "Frederik Dahlin Karlsen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FrederikDahlin/valgfag-login/issues"
+  },
+  "homepage": "https://github.com/FrederikDahlin/valgfag-login#readme",
+  "dependencies": {
+    "bcrypt": "^3.0.0",
+    "body-parser": "^1.18.3",
+    "date-and-time": "^0.6.3",
+    "ejs": "^2.6.1",
+    "express": "^4.16.3",
+    "express-ejs-extend": "0.0.1",
+    "express-session": "^1.15.6",
+    "guid": "0.0.12",
+    "morgan": "^1.9.0",
+    "mysql2": "^1.6.1"
+  }
+}
