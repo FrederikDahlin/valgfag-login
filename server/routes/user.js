@@ -158,6 +158,22 @@ module.exports = (app) => {
                     console.log(err);
                     // res.redirect('/')
                 });
+            sendmail({
+                from: 'no-reply@website.com',
+                to: mail,
+                subject: 'Website - Verify account',
+                html: `Hello, <br>
+                        Thank you for creating your account!<br>
+                        Before you can login, you must verify your account by visiting the link below:<br>
+                            <a href="/register/verify">Verify account</a><br>
+                        Or copy and paste the following URL into the address bar of your favorite internet browser:<br>
+                            http://localhost:3000/register/verify/--id <br>
+                        Regards, <br>
+                        Website name`,
+            }, function (err, reply) {
+                console.log(err && err.stack);
+                // console.dir(reply);
+            });
         }
     });
 
@@ -244,6 +260,7 @@ module.exports = (app) => {
         res.render('pages/login_reset_select', {
             "titel": "Select a New Password"
             , "page": "Select a new password"
+            , "reset": ""
             , "step": "step3"
             , "step1": "Enter your e-mail"
             , "step2": "Check your e-mail"
@@ -251,5 +268,71 @@ module.exports = (app) => {
             , "session": req.session
             , "error": ""
         });
+
+        let test;
+
+        function run() {
+            test = setTimeout(redirect, 3000);
+        }
+
+        function redirect() {
+            res.redirect('/login')
+        }
+    });
+
+    //  post select-password, (mail)
+    app.post('/select-password', (req, res) => {
+        let error_msg = [];
+
+        let password = req.body.user_password;
+        if (password == undefined || password == '') {
+            error_msg.push(' password');
+        }
+
+        let password_confirm = req.body.user_password_confirm;
+        if (password_confirm == undefined || password_confirm == '') {
+            error_msg.push(' password confirm');
+        }
+
+        if (password != password_confirm) {
+            error_msg.push(' password match');
+        }
+
+        if (error_msg.length > 0) {
+            res.render('pages/login_reset_select', {
+                "titel": "Reset your password"
+                , "page": "Reset your password"
+                , "reset": ""
+                , "step": "step3"
+                , "step1": "Enter your e-mail"
+                , "step2": "Check your e-mail"
+                , "step3": "Reset password"
+                , "session": req.session
+                , "error": "Udfyld;" + error_msg.join(",")
+            });
+        } else {
+            res.render('pages/login_reset_select', {
+                "titel": "Reset your password"
+                , "page": "Reset your password"
+                , "reset": "sucess"
+                , "step": "step3"
+                , "step1": "Enter your e-mail"
+                , "step2": "Check your e-mail"
+                , "step3": "Sucess"
+                , "session": req.session
+                , "error": "Udfyld;" + error_msg.join(",")
+            });
+
+            let test;
+
+            function run() {
+                test = setTimeout(redirect, 3000);
+            }
+
+            function redirect() {
+                res.redirect('/login')
+            }
+
+        }
     });
 }
