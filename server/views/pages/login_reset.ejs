@@ -1,0 +1,19 @@
+<% extend('../partials/login_template') %>
+
+<% if(step == 'step1') { %>
+    <p>You can change or reset your password by completing the form below. We will e-mail you a link which you may then use to select a new password.</p>
+    
+    <form action="" method="POST">
+        <label class="control-label required" for="reset_email">Enter the e-mail address that is associated with your account.</label>
+        <input id="reset_email" class="form-control" type="email" name="user_mail" placeholder="Your e-mail adresse">
+        
+        <button class="btn btn-warning" type="submit">Reset password</button>
+    </form>
+    
+    <span><%= error %></span>
+<% } else { %>
+    <h4 class="text-success">
+            <i class="fa fa-check-circle" aria-hidden="true"></i> Sucess!
+    </h4>
+    <p>Please check your inbox for further instructions on resetting your account's password.</p>
+<% } %>
