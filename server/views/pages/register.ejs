@@ -1,19 +1,79 @@
 <% extend('../partials/login_template') %>
 
-    <form method="POST">
-        <label class="control-label required" for="register_email">E-mail address:</label>
-        <input id="register_email" class="user_mail form-control" type="email" name="user_mail" placeholder="Your e-mail adresse">
+<form method="POST" id="form">
+    <label class="control-label required" for="register_email">E-mail address:</label>
+    <span id="error_email" class="error_input"></span>
+    <span id="error_email_check" class="error_input"></span>
+    <input id="register_email" class="user_mail form-control" type="email" name="user_mail" placeholder="Your e-mail adresse">
 
-        <label class="control-label required" for="register_password">Password:</label>
-        <input id="register_password" class="user_password form-control" type="password" name="user_password" placeholder="Create a password">
+    <label class="control-label required" for="register_password">Password:</label>
+    <span id="error_password" class="error_input"></span>
+    <input id="password" class="user_password form-control" type="password" name="user_password" placeholder="Create a password">
+    <section style="margin-bottom: 20px;">
+        <div id="meter_bg">
+            <meter max="4" id="password-strength-meter"></meter>
+        </div>
+        <strong>Password strength: </strong>
+        <p id="password-strength-text" style="display: inline;">N/A</p>
+    </section>
 
-        <label class="control-label required" for="register_firstname">First name:</label>
-        <input id="register_firstname" class="user_firstname form-control" type="text" name="user_firstname" placeholder="Your first name">
+    <label class="control-label required" for="register_firstname">First name:</label>
+    <span id="error_firstname" class="error_input"></span>
+    <input id="register_firstname" class="user_firstname form-control" type="text" name="user_firstname" placeholder="Your first name">
 
-        <label class="control-label required" for="register_lastname">Last name:</label>
-        <input id="register_lastname" class="user_lastname form-control" type="text" name="user_lastname" placeholder="Your last name">
+    <label class="control-label required" for="register_lastname">Last name:</label>
+    <span id="error_lastname" class="error_input"></span>
+    <input id="register_lastname" class="user_lastname form-control" type="text" name="user_lastname" placeholder="Your last name">
 
-        <hr>
-        <button class="btn btn-primary" type="submit">Join now!</button>
-    </form>
-    <span><%= error %></span>
+    <hr>
+    <button class="btn btn-primary gem" type="submit">Join now!</button>
+</form>
+<span id="error"><%= error %></span>
+
+<script>
+    document.querySelector('.gem').addEventListener('click', (event) => {
+        event.preventDefault();
+        let form = document.querySelector('#form');
+        let form_valid = true;
+        let error_email = document.getElementById('error_email');
+        let error_email_check = document.getElementById('error_email_check');
+        let error_password = document.getElementById('error_password');
+        let error_firstname = document.getElementById('error_firstname');
+        let error_lastname = document.getElementById('error_lastname');
+        let error = document.getElementById('error');
+        error_email.textContent = "";
+        error_email_check.textContent = "";
+        error_password.textContent = "";
+        error_firstname.textContent = "";
+        error_lastname.textContent = "";
+        error.textContent = "";
+
+        
+        if (form.user_mail.value == undefined || form.user_mail.value == '') {
+            error_email.textContent = "Enter your e-mail"
+            form_valid = false;
+        }
+        if (form.user_mail.value != '' && !validateEmail(form.user_mail.value)) {
+            error_email_check.textContent = "Non valid e-mail"
+            form_valid = false
+        }
+        if (form.user_password.value == undefined || form.user_password.value == '') {
+            error_password.textContent = "Create a password"
+            form_valid = false;
+        }
+        if (form.user_firstname.value == undefined || !isNaN(form.user_firstname.value) || form.user_firstname.value == '') {
+            error_firstname.textContent = "Enter your first name"
+            form_valid = false;
+        }
+        if (form.user_lastname.value == undefined || !isNaN(form.user_lastname.value) || form.user_lastname.value == '') {
+            error_lastname.textContent = "Enter your last name"
+            form_valid = false;
+        }
+
+        if (form_valid == true) {
+            form.submit();
+
+        }
+    })
+</script>
+<script src="/script/password_strength.js"></script>

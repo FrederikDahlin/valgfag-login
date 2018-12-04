@@ -20,24 +20,63 @@
             <div class="col-md-12 content">
                 <h3>Login</h3>
                 <hr>
-                <form method="POST" action="/login">
+                <form id="form" method="POST" action="/login">
                     <small class="register-account pull-right">
                         <a href="/register">Don't have an account?</a>
                     </small>
+                    <span id="error_email" class="error_input" style="position: absolute;right:22px;"></span>
+                    <span id="error_email_check" class="error_input" style="position: absolute;right:22px;"></span>
                     <label class="control-label required" for="login_email">E-mail address:</label>
-                    <input required id="login_email" class="user_mail form-control" type="email" name="user_mail" placeholder="Your e-mail adresse" value="<%= user_mail %>">
+                    <input required id="login_email" class="user_mail form-control" type="email" name="user_mail"
+                        placeholder="Your e-mail adresse" value="<%= user_mail %>">
 
                     <small class="forgot-password pull-right">
                         <a href="/reset-password">Forgot your password?</a>
                     </small>
                     <label class="control-label required" for="login_password">Password:</label>
-                    <input required id="login_password" class="user_password form-control" type="password" name="user_password" placeholder="Your password">
+                    <span id="error_password" class="error_input" style="position: absolute;right:22px;"></span>
+                    <input required id="login_password" class="user_password form-control" type="password" name="user_password"
+                        placeholder="Your password">
 
-                    <button type="submit" id="login_submit" class="btn btn-primary">Login</button>
+                    <button type="submit" id="login_submit" class="btn btn-primary gem">Login</button>
                 </form>
-                <span><%= error %></span>
+                <span id="error"><%= error %></span>
             </div>
         </div>
     </div>
 
+
 </article>
+<script>
+    document.querySelector('.gem').addEventListener('click', (event) => {
+        event.preventDefault();
+        let form = document.querySelector('#form');
+        let form_valid = true;
+        let error_email = document.getElementById('error_email');
+        let error_email_check = document.getElementById('error_email_check');
+        let error_password = document.getElementById('error_password');
+        let error = document.getElementById('error');
+        error_email.textContent = "";
+        error_email_check.textContent = "";
+        error_password.textContent = "";
+        error.textContent = "";
+
+        if (form.user_mail.value == undefined || form.user_mail.value == '') {
+            error_email.textContent = "Enter your e-mail"
+            form_valid = false;
+        }
+        if (form.user_mail.value != '' && !validateEmail(form.user_mail.value)) {
+            error_email_check.textContent = "Non valid e-mail"
+            form_valid = false
+        }
+        if (form.user_password.value == undefined || form.user_password.value == '') {
+            error_password.textContent = "Enter your password"
+            form_valid = false;
+        }
+
+        if (form_valid == true) {
+            form.submit();
+
+        }
+    })
+</script>
