@@ -2,17 +2,16 @@ const mysql = require('../config/mysql.js');
 
 let sql = ` SELECT 
                 user_id
-                , user_mail
-                , user_firstname
-                , user_lastname
-                , user_created
-                , user_verified
-                , user_rank_id
-                , user_rank_name
+              , user_mail
+              , user_firstname
+              , user_lastname
+              , user_created
+              , user_verified
+              , user_rank_id
+              , user_rank_name
             FROM
                 users
             INNER JOIN user_ranks ON fk_user_rank_id = user_rank_id `;
-
 
 module.exports = {
     get_login: (id) => {
@@ -34,7 +33,32 @@ module.exports = {
         });
     },
 
-    create_login: (mail, password, firstname, lastname) => {
+    login: (mail) => {
+        return new Promise((resolve, reject) => {
+            let db = mysql.connect();
+            db.execute(`SELECT
+                            user_id
+                            , user_mail
+                            , user_password
+                        FROM
+                            users
+                        WHERE user_mail = ?`, [mail], (err, rows) => {
+                if (err) {
+                    console.log(err.message);
+                    reject(err.message);
+                } else {
+                    if (rows.length == 1) {
+                        resolve(rows[0]);
+                    } else {
+                        reject('forkert kodeord eller mail');
+                    }
+                }
+            });
+            db.end();
+        });
+    },
+
+    register: (mail, password, firstname, lastname) => {
         return new Promise((resolve, reject) => {
             let db = mysql.connect();
             db.execute(`INSERT INTO
@@ -56,5 +80,22 @@ module.exports = {
         })
     },
 
-
+    reset_password: (password, id) => {
+        return new Promise((resolve, reject) => {
+            let db = mysql.connect();
+            db.execute(`UPDATE 
+                            users
+                        SET 
+                            user_password = ?
+                        WHERE 
+                            user_id = ?`, [password, id], (err, rows) => {
+                    if (err) {
+                        reject('sql fejl! ' + err.message);
+                    } else {
+                        resolve(rows);
+                    }
+                });
+            db.end();
+        });
+    },
 }
