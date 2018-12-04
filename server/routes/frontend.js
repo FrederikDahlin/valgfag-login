@@ -26,13 +26,9 @@ module.exports = (app) => {
             try {
                 // let data = await hent_template_data();
 
-                let info = {
-                    "info_id": 0
-                    , "info_titel": ""
-                    , "info_billede": ""
-                    , "info_undertitel": ""
-                    , "info_teaser": ""
-                };
+                // let info = {
+                //     "info_id": 0
+                // };
 
                 // await info_service.hent_en()
                 //     .then(result => {
@@ -43,12 +39,9 @@ module.exports = (app) => {
                     "titel": "Index"
                     , "page": "Forsiden"
                     , "kategoriNav": ""
-                    , "infomation": info
-
-                    , "fejlbesked": ""
+                    // , "infomation": info
                     , "email": ""
                     , "session": req.session
-                    
                     // , "kategorier": data.alle_kategorier
                     
                 });
