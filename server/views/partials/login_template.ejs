@@ -9,52 +9,16 @@
     <link rel="stylesheet" type="text/css" href="/css/style.css">
     <script src="https://use.fontawesome.com/10d1bc1575.js"></script>
     <script src="/script/helpers.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.2.0/zxcvbn.js"></script>
     <title>
         <%= titel %>
     </title>
-
-    <style>
-        html body main .content {
-            background-color: #fff;
-            border: 1px #ccc solid;
-            border-radius: 10px;
-            box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.15);
-            margin: 20px auto;
-            max-width: 470px;
-            padding: 10px 20px 20px;
-        }
-
-        .register-steps {
-            margin: 0;
-        }
-
-        .register-steps .step {
-            border-radius: 10px;
-            color: #aaa;
-            padding: 7px 5px 0 5px;
-            text-align: center;
-        }
-
-        .register-steps .step.active {
-            background-color: #f3f3f3;
-            color: #000;
-        }
-
-        input {
-            margin-bottom: 20px;
-        }
-
-        small {
-            margin-top: 28px;
-            color: #337ab7;
-        }
-    </style>
 </head>
 
 <body>
     <main class="container">
         <div class="col-md-12 content">
-            <% if(step == 'register') { %>
+            <% if(step == 'step1') { %>
                 <small class="already-have-account pull-right">
                     <i class="fa fa-sign-in" aria-hidden="true"></i>
                     <a href="/login">Already have an account?</a>
