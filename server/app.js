@@ -59,8 +59,8 @@ app.listen(port, (err) => {
     console.log('App is listening on http://localhost:' + port);
 });
 
-// placeres som den absolut første route der rammes
+// // placeres som den absolut første route der rammes
 // app.get('*', (req, res, next) => {
-//     req.session.login_id = 1;
+//     req.session.user_id = 1;
 //     next();
 // });
