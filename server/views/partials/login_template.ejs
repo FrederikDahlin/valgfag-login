@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <script src="https://use.fontawesome.com/10d1bc1575.js"></script>
+    <script src="/script/helpers.js"></script>
+    <title>
+        <%= titel %>
+    </title>
+
+    <style>
+        html body main .content {
+            background-color: #fff;
+            border: 1px #ccc solid;
+            border-radius: 10px;
+            box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.15);
+            margin: 20px auto;
+            max-width: 470px;
+            padding: 10px 20px 20px;
+        }
+
+        .register-steps {
+            margin: 0;
+        }
+
+        .register-steps .step {
+            border-radius: 10px;
+            color: #aaa;
+            padding: 7px 5px 0 5px;
+            text-align: center;
+        }
+
+        .register-steps .step.active {
+            background-color: #f3f3f3;
+            color: #000;
+        }
+
+        input {
+            margin-bottom: 20px;
+        }
+
+        small {
+            margin-top: 28px;
+            color: #337ab7;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="container">
+        <div class="col-md-12 content">
+            <% if(step == 'register') { %>
+                <small class="already-have-account pull-right">
+                    <i class="fa fa-sign-in" aria-hidden="true"></i>
+                    <a href="/login">Already have an account?</a>
+                </small>
+            <% } %>
+            <h3>
+                <%= page %>
+            </h3>
+            <hr>
+            <div class="row register-steps">
+                <div class="col-xs-4 step step-1 <%= (step == "step1" ? "active" : "" ) %>">
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                    <strong>Step 1:</strong>
+                    <p><%= step1 %></p>
+                </div>
+                <div class="col-xs-4 step step-2 <%= (step == "step2" ? "active" : "" ) %>">
+                    <i class="fa fa-envelope" aria-hidden="true"></i>
+                    <strong>Step 2:</strong>
+                    <p><%= step2 %></p>
+                </div>
+                <div class="col-xs-4 step step-3 <%= (step == "step3" ? "active" : "" ) %>">
+                    <i class="fa fa-sign-in" aria-hidden="true"></i>
+                    <strong>Step 3:</strong>
+                    <p><%= step3 %></p>
+                </div>
+            </div>
+            <hr>
+            <%- content %>
+        </div>
+    </main>
+
+    <script src="/assets/script/jquery-3.3.1.min.js"></script>
+    <script src="/assets/script/bootstrap.min.js"></script>
+</body>
+
+</html>
