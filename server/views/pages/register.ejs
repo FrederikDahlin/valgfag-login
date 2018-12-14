@@ -4,7 +4,8 @@
     <label class="control-label required" for="register_email">E-mail address:</label>
     <span id="error_email" class="error_input"></span>
     <span id="error_email_check" class="error_input"></span>
-    <input id="register_email" class="user_mail form-control" type="email" name="user_mail" placeholder="Your e-mail adresse">
+    <span id="error" class="error_input"><%= error %></span>
+    <input id="register_email" class="user_mail form-control" type="email" name="user_mail" placeholder="Your e-mail adresse" value="<%= mail %>">
 
     <label class="control-label required" for="register_password">Password:</label>
     <span id="error_password" class="error_input"></span>
@@ -19,16 +20,18 @@
 
     <label class="control-label required" for="register_firstname">First name:</label>
     <span id="error_firstname" class="error_input"></span>
-    <input id="register_firstname" class="user_firstname form-control" type="text" name="user_firstname" placeholder="Your first name">
+    <input id="register_firstname" class="user_firstname form-control" type="text" name="user_firstname" placeholder="Your first name" value="<%= firstname %>">
 
     <label class="control-label required" for="register_lastname">Last name:</label>
     <span id="error_lastname" class="error_input"></span>
-    <input id="register_lastname" class="user_lastname form-control" type="text" name="user_lastname" placeholder="Your last name">
+    <input id="register_lastname" class="user_lastname form-control" type="text" name="user_lastname" placeholder="Your last name" value="<%= lastname %>">
 
     <hr>
-    <button class="btn btn-primary gem" type="submit">Join now!</button>
+    <section class="center">
+        <button class="btn btn-primary gem" type="submit"><strong><i class="fa fa-check" aria-hidden="true"></i> Join now!</strong></button>
+    </section>
+    
 </form>
-<span id="error"><%= error %></span>
 
 <script>
     document.querySelector('.gem').addEventListener('click', (event) => {
