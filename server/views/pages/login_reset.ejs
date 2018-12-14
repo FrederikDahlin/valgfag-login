@@ -7,12 +7,13 @@
     <label class="control-label required" for="reset_email">Enter the e-mail that is associated.</label>
     <span id="error_email" class="error_input"></span>
     <span id="error_email_check" class="error_input"></span>
-    <input id="reset_email" class="form-control" type="email" name="user_mail" placeholder="Your e-mail adresse">
-
+    <span id="error" class="error_input"><%= error %></span>
+    <input id="reset_email" class="form-control" type="email" name="user_mail" placeholder="Your e-mail adresse" value="<%= mail %>">
+    <section class="center">
     <button class="btn btn-warning gem" type="submit">Reset password</button>
+    </section>
 </form>
 
-<span id="error"><%= error %></span>
 <script>
     document.querySelector('.gem').addEventListener('click', (event) => {
         event.preventDefault();
