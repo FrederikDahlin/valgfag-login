@@ -1,9 +1,32 @@
 <% extend('../partials/login_template') %>
 
-<h4 class="text-success">
-    <i class="fa fa-check-circle" aria-hidden="true"></i> Your registration was successful!
-</h4>
-<p>Please check your inbox for an e-mail containing instructions on verifying your e-mail address.</p>
-<p>The e-mail was sent to the following e-mail address:</p>
-<strong style="padding-left:50px;"><i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i> <%  %></strong>
-<p>If you do not receive an e-mail within 5-10 minutes, please try <a href="/register">registering your account</a> again.</p>
+<% if(validate == '') { %>
+
+    <h4 class="text-success">
+        <i class="fa fa-check-circle" aria-hidden="true"></i> Your registration was successful!
+    </h4>
+    <p>Please check your inbox for an e-mail containing instructions on verifying your e-mail address.</p>
+    <p>The e-mail was sent to the following e-mail address:</p>
+    <strong style="padding-left:50px;"><i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></strong>
+    <p>If you do not receive an e-mail within 5-10 minutes, please try <a href="/register">registering your account</a> again.</p>
+
+<% } else if(validate == 'verify') { %>
+
+    <p>Verify you're a human and click the button below to continue:</p>
+    <form method="POST" class="center">
+        <button type="submit" class="btn">Verify e-mail</button>
+    </form>
+
+<% } else if(validate == 'sucess') { %>
+
+    <h4 class="text-success">
+        <i class="fa fa-check-circle" aria-hidden="true"></i> Your verification was successful!
+    </h4>
+    <p>You will be redirected to <a href="/login">login</a> shortly</p>
+
+<% } else if(validate == 'error') { %>
+
+    <h4 class="text-danger"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Invalid Code</h4>
+    <p>The security code required to verify your account is not valid or has expired.</p>
+    
+<% } %>
