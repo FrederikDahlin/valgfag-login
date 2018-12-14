@@ -78,7 +78,8 @@
 
         let chat = document.querySelector('#chat')
 
-        let messageWrapper = document.querySelector('.messageWrapper')
+        let messageWrapper = document.createElement('div');
+        messageWrapper.setAttribute('class', 'messageWrapper');
 
         let user_h5 = document.createElement('h5');
         user_h5.setAttribute('class', 'message_content_h5');
@@ -99,10 +100,11 @@
         content.setAttribute('class', 'message_content_text');
         content.textContent = payload.message;
         
-        content_section.appendChild(user_h5);
+        messageWrapper.appendChild(user_h5);
         user_h5.appendChild(user_span);
+        messageWrapper.appendChild(content_section);
         content_section.appendChild(content);
-        chat.appendChild(content_section);
+        chat.appendChild(messageWrapper);
         updateScroll()
     });
     updateScroll()
