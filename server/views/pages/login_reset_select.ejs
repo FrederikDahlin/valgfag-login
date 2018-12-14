@@ -1,79 +1,86 @@
 <% extend('../partials/login_template') %>
 
-<% if(reset != 'sucess') { %>
-<p>Please enter a new password for your account.</p>
+<% if(reset == '') { %>
 
-<form id="form" action="/select-password" method="POST">
-    <label class="control-label" for="select_password">New password</label>
-    <span id="error_password" class="error_input"></span>
-    <input required id="password" class="form-control" type="password" name="user_password" placeholder="Your new password">
-    <section style="margin-bottom: 20px;">
+    <p>Please enter a new password for your account.</p>
+
+    <form id="form" method="POST">
+        <label class="control-label" for="select_password">New password</label>
+        <span id="error_password" class="error_input"></span>
+        <input required id="password" class="form-control" type="password" name="user_password" placeholder="Your new password">
+        <section style="margin-bottom: 20px;">
         <div id="meter_bg">
             <meter max="4" id="password-strength-meter"></meter>
         </div>
         <strong>Password strength: </strong>
         <p id="password-strength-text" style="display: inline;">N/A</p>
-    </section>
+        </section>
 
-    <label class="control-label" for="select_password_confirm">Confirm password</label>
-    <span id="error_password_confirm" class="error_input"></span>
-    <input required id="select_password_confirm " class="form-control" type="password" name="user_password_confirm"
-        placeholder="Confirm new password">
+        <label class="control-label" for="select_password_confirm">Confirm password</label>
+        <span id="error_password_confirm" class="error_input"></span>
+        <input required id="select_password_confirm " class="form-control" type="password" name="user_password_confirm"
+            placeholder="Confirm new password">
 
-    <button class="btn btn-success gem" type="submit" onclick="run()">Change password</button>
-</form>
-<span id="error">
-    <%= error %></span>
+        <section class="center">    
+        <button class="btn btn-success gem" type="submit" onclick="run()">Change password</button>
+        </section>
+    </form>
+    <span id="error"><%= error %></span>
 
-<script>
-    document.querySelector('.gem').addEventListener('click', (event) => {
-        event.preventDefault();
-        let form = document.querySelector('#form');
-        let form_valid = true;
-        let error_password = document.getElementById('error_password');
-        error_password.textContent = "";
-        let error_password_confirm = document.getElementById('error_password_confirm');
-        error_password_confirm.textContent = "";
-        let error = document.getElementById('error');
-        error.textContent = "";
+    <script>
+        document.querySelector('.gem').addEventListener('click', (event) => {
+            event.preventDefault();
+            let form = document.querySelector('#form');
+            let form_valid = true;
+            let error_password = document.getElementById('error_password');
+            error_password.textContent = "";
+            let error_password_confirm = document.getElementById('error_password_confirm');
+            error_password_confirm.textContent = "";
+            let error = document.getElementById('error');
+            error.textContent = "";
 
-        if (form.user_password.value == undefined || form.user_password.value == '') {
-            error_password.textContent = "Choose a new password"
-            form_valid = false;
-        }
-        if (form.user_password_confirm.value == undefined || form.user_password_confirm.value == '') {
-            error_password_confirm.textContent = "Confirm new password"
-            form_valid = false;
-        }
-        if (form.user_password.value != form.user_password_confirm.value) {
-            error_password_confirm.textContent = "Password doesn't match"
-            form_valid = false;
-        }
+            if (form.user_password.value == undefined || form.user_password.value == '') {
+                error_password.textContent = "Choose a new password"
+                form_valid = false;
+            }
+            if (form.user_password_confirm.value == undefined || form.user_password_confirm.value == '') {
+                error_password_confirm.textContent = "Confirm new password"
+                form_valid = false;
+            }
+            if (form.user_password.value != form.user_password_confirm.value) {
+                error_password_confirm.textContent = "Password doesn't match"
+                form_valid = false;
+            }
 
-        if (form_valid == true) {
-            form.submit();
-            // let test;
-            
-            // function run() {
-            //     test = setTimeout(redirect, 3000);
-            // }
-            
-            // function redirect() {
-            //     res.redirect('/login')
-            // }
-            // run();
-        }
-    })
-</script>
-<% } else { %>
-<h4 class="text-success">
-    <i class="fa fa-check-circle" aria-hidden="true"></i> Sucess!
-</h4>
-<p>Your account password has been changed.</p>
-<p>You can now <a href="/login">login</a> with you new password.</p>
+            if (form_valid == true) {
+                form.submit();
+                // let test;
 
-<script>
+                // function run() {
+                //     test = setTimeout(redirect, 3000);
+                // }
+                
+                // function redirect() {
+                //     res.redirect('/login')
+                // }
+                // run();
+            }
+        })
+    </script>
 
-</script>
+<% } else if(reset == 'sucess') { %>
+
+    <h4 class="text-success">
+        <i class="fa fa-check-circle" aria-hidden="true"></i> Sucess!
+    </h4>
+    <p>Your account password has been changed.</p>
+    <p>You can now <a href="/login">login</a> with you new password.</p>
+
+<% } else if(reset == 'error') { %>
+
+    <h4 class="text-danger"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Invalid Code</h4>
+    <p>The security code required to verify your account is not valid or has expired.</p>
+        
 <% } %>
+
 <script src="/script/password_strength.js"></script>
