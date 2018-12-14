@@ -1,54 +1,42 @@
-// const kategori_service = require('../services/kategorier.js');
-
-
-async function hent_template_data() {
-    let data = {};
-    data.alle_kategorier = [];
- 
-    data.butik = {
-        "butik_id": 0
-        , "butik_titel": ""
-        , "butik_adresse": ""
-        , "butik_by": ""
-        , "butik_telefon": 0
-        , "butik_email": ""
-    }
-
-   
-
-    return data;
-}
+const chat_service = require('../services/chat.js');
 
 module.exports = (app) => {
     //index
     app.get('/', (req, res) => {
-        (async () => {
-            try {
-                // let data = await hent_template_data();
+        res.render('pages/index', {
+            "titel": "Index"
+            , "page": "Index"
+            , "email": ""
+            , "session": req.session
+        });
+    });
 
-                // let info = {
-                //     "info_id": 0
-                // };
+    // get /chat, 
+    app.get('/chat', (req, res) => {
+        if (req.session.user_id == undefined) {
+            res.redirect('/login');
+        } else {
+            (async () => {
+                try {
+                    let chat = [];
 
-                // await info_service.hent_en()
-                //     .then(result => {
-                //         info = result;
-                //     })
+                    await chat_service.hent_alle()
+                        .then(result => {
+                            chat = result;
+                        })
 
-                res.render('pages/index', {
-                    "titel": "Index"
-                    , "page": "Forsiden"
-                    , "kategoriNav": ""
-                    // , "infomation": info
-                    , "email": ""
-                    , "session": req.session
-                    // , "kategorier": data.alle_kategorier
-                    
-                });
+                    res.render('pages/chat', {
+                        "titel": "Chat"
+                        , "page": "Chat"
+                        , "chat": chat
+                        , "session": req.session
 
-            } catch (error) {
-                console.log(error);
-            }
-        })();
+                    });
+
+                } catch (error) {
+                    console.log(error);
+                }
+            })();
+        }
     });
 }
