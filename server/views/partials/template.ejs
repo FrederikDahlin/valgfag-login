@@ -41,11 +41,13 @@
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="/">Home</a></li>
+                        <li class="<%=(page == 'Index' ? 'active': '') %>"><a href="/">Home</a></li>
                         <% if(session.user_id == undefined) { %>
-                            <li><a href="/login">Log in</a></li>
+                            <li class="<%=(page == 'Login' ? 'active': '') %>"><a href="/login" >Log in</a></li>
                             <li><a href="/register">Register</a></li>
                         <% } else { %>
+                            <li class="<%=(page == 'Chat' ? 'active': '') %>"><a href="/chat">Chat</a></li>
+                            <% if(session.user_rank == 2) { %><li><a href="/admin">Adminstration</a></li><% } %>
                             <li><a href="/logout">Log out</a></li>
                         <% } %>
                         <!-- <li class="dropdown">
