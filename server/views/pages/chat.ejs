@@ -1,0 +1,109 @@
+<% extend('../partials/template') %>
+
+<style>
+    .btn {
+        width: 19%;
+        padding-left: 0;
+        padding-right: 0;
+    }
+</style>
+
+<h2 style="text-align: center;"><strong>Messenger chatbox</strong></h2>
+<div id="chatbox" class="content">
+    <article id="chat">
+        <div class="messageWrapper"> <!-- benyttes til at åbne den første messagewrappper-->
+        <%  let previousUser = 0;
+            chat.forEach((message, index) => {
+                if(message.user_id != previousUser && index > 0 ){ %>
+                </div><!-- lukker wrapper, hvis dette ikke er den første besked -->
+                <div class="messageWrapper"> <!-- åbner wrapper til en ny besked-->
+                    <% if(session.user_id != message.user_id) { %>
+                    <h5 class="message_content_h5">
+                        <span class="message_content_name <%=(message.fk_user_rank_id === 2 ? "admin": "") %>">
+                            <%= message.user_firstname %>
+                            <%= message.user_lastname %>
+                        </span>
+                        <% if(message.fk_user_rank_id === 2) { %>
+                            <!-- <img src="https://img.icons8.com/metro/26/000000/user-shield.png" height="12px"> -->
+                            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+                                 height="11px"
+                                 viewBox="0 0 224 224"
+                                 style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><path d="M0,224v-224h224v224z" fill="none"></path><g fill="#e74c3c"><g id="surface1"><path d="M203.60577,43.3125c-1.71635,-1.95193 -4.13943,-3.0625 -6.69712,-3.16347c-19.75481,-0.5048 -44.79327,-21.63942 -61.31731,-29.95192c-10.23077,-5.08173 -16.96154,-8.48077 -22.04326,-9.35577c-0.53846,-0.06731 -1.04327,-0.10096 -1.54808,-0.10096c-0.50481,0 -1.00961,0.03365 -1.54807,0.10096c-5.08173,0.90865 -11.8125,4.27404 -22.00962,9.38942c-16.55769,8.27885 -41.5625,29.41347 -61.35096,29.91827c-2.55769,0.10096 -4.98077,1.21154 -6.69711,3.16347c-1.75,1.95192 -2.625,4.54327 -2.52404,7.20192c4.27404,86.35577 35.23558,139.79808 89.58653,170.82692c1.41347,0.80769 2.96154,1.2452 4.54327,1.2452c1.54808,0 3.12981,-0.43751 4.54327,-1.2452c54.35096,-31.02884 85.3125,-84.47115 89.55288,-170.82692c0.13462,-2.65865 -0.74038,-5.25 -2.49038,-7.20192zM155.61538,131.62019c0,11.71154 -22.41346,14.37019 -43.48077,14.37019c-21.03365,0 -43.75,-2.65866 -43.75,-14.37019c0,-2.32211 0,-0.90866 0,-3.23077c0,-8.61538 15.51442,-17.33173 28.70673,-22.07692c0.97597,-0.37019 5.51923,-2.82692 2.9952,-9.52404c-6.5625,-6.69712 -11.50962,-17.53365 -11.50962,-28.20192c0,-16.32212 10.80288,-24.87019 23.42308,-24.87019c12.62019,0 23.49039,8.54807 23.49039,24.87019c0,10.63462 -4.98077,21.40385 -11.47597,28.13462h0.03366c-2.49039,7.57211 1.48077,9.38942 2.12019,9.59134c13.89904,4.57692 29.44712,13.22596 29.44712,22.07692c0,2.32211 0,0.94231 0,3.23077z"></path></g></g></g></svg>
+                        <% } %>
+                    </h5>
+                    <% }
+                } %>
+                <section class="message_content_section <%=(session.user_id == message.user_id ? "message_by_user" : "" ) %>">
+                    <span class="message_content_text">
+                        <%= message.chat_message %>
+                    </span>
+                </section>
+            <%
+                previousUser = message.user_id;
+            }) %>
+        </div><!-- lukker den sidste messageWrapper-->
+    </article>
+</div>
+<form id="chat_form">
+    <input id="userMsg" class="form-control" type="text" name="message" autocomplete="off" placeholder="Message">
+    <button id="userSend" class="btn btn-primary">Send</button>
+</form>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+<script src="/script/getcookie.js"></script>
+<script>
+    // let socket = io.connect('http://localhost:3000');
+    let socket = io.connect('/');
+
+    document.querySelector('#userSend').addEventListener('click', (event) => {
+        event.preventDefault();
+        let message = document.querySelector('#userMsg');
+        if (message.value.length > 0) {
+            socket.emit('message to server', {
+                'message': message.value
+            });
+        }
+        message.value = '';
+    });
+    let previousUser = 0;
+    socket.on('message to client', payload => {
+
+        // if(getAttribute("data-animal-type") {
+
+        // }
+
+
+
+
+
+        let chat = document.querySelector('#chat')
+
+        let messageWrapper = document.querySelector('.messageWrapper')
+
+        let user_h5 = document.createElement('h5');
+        user_h5.setAttribute('class', 'message_content_h5');
+        let user_span = document.createElement('span');
+        user_span.setAttribute('class', 'message_content_name');
+        user_span.textContent = payload.user_firstname + ' ' + payload.user_lastname;
+
+        let content_section = document.createElement('section');
+        if (getCookie('user_id') == payload.user_id) {
+            content_section.setAttribute('class', 'message_content_section message_by_user');
+            user_h5.setAttribute('class', 'displaynone');
+        } else {
+            content_section.setAttribute('class', 'message_content_section');
+            content_section.setAttribute('data-userId', payload.user_id);
+        }
+
+        let content = document.createElement('span');
+        content.setAttribute('class', 'message_content_text');
+        content.textContent = payload.message;
+        
+        content_section.appendChild(user_h5);
+        user_h5.appendChild(user_span);
+        content_section.appendChild(content);
+        chat.appendChild(content_section);
+        updateScroll()
+    });
+    updateScroll()
+</script>
